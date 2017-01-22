@@ -5,6 +5,7 @@ Splash.prototype = {
 	loadScripts: function() {
 		game.load.script('bomb_object', 'objects/bomb.js');
 		game.load.script('game_state', 'states/game.js');
+		game.load.script('config', 'objects/config.js');
 	},
 
 	loadImages: function() {

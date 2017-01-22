@@ -1,6 +1,7 @@
 const BombType = {
     DANGEROUS_BOMB_STRAIGHT_WAVE: 'bomb_img',
     DANGEROUS_BOMB_DIAGONAL_WAVE: 'bomb_img',
+    DANGEROUS_BOMB_EIGHT_WAVE: 'bomb_img',
     SAFE_BOMB: 'bomb_img'
 };
 
