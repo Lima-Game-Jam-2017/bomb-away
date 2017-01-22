@@ -14,11 +14,11 @@ const BombProperties = {
 
 Bomb = function(game, type, x, y) {
 	Phaser.Sprite.call(this, game, x, y, type);
-
+    console.log(type);
     this.type = type;
 	this.anchor.setTo(0.5, 0.5);
     this.inputEnabled = true;
-	game.add.existing(this);
+	game.add.existing(this)
 };
 
 Bomb.prototype = Object.create(Phaser.Sprite.prototype);
@@ -38,32 +38,32 @@ Bomb.prototype.detonate = function() {
     this.kill();
     var totalWaves = 0;
     var waves = [];
-    var speed=100;
+    var speed=300;
     switch (this.type) {
         case BombType.DANGEROUS_BOMB_STRAIGHT_WAVE:
             totalWaves = 4
-            waves.push(new Wave(game, this.x, this.y, 0,speed));
-            waves.push(new Wave(game, this.x, this.y, 0,-speed));
-            waves.push(new Wave(game, this.x, this.y, speed,0));
-            waves.push(new Wave(game, this.x, this.y, -speed,0));
+            waves.push(new Wave(game, this.x, this.y, 0,speed,90));
+            waves.push(new Wave(game, this.x, this.y, 0,-speed,270));
+            waves.push(new Wave(game, this.x, this.y, speed,0,0));
+            waves.push(new Wave(game, this.x, this.y, -speed,0,180));
             break;
         case BombType.DANGEROUS_BOMB_DIAGONAL_WAVE:
             totalWaves = 4
-            waves.push(new Wave(game, this.x, this.y, speed,speed));
-            waves.push(new Wave(game, this.x, this.y, -speed,-speed));
-            waves.push(new Wave(game, this.x, this.y, speed,-speed));
-            waves.push(new Wave(game, this.x, this.y, -speed,speed));
+            waves.push(new Wave(game, this.x, this.y, speed,speed,45));
+            waves.push(new Wave(game, this.x, this.y, -speed,-speed,225));
+            waves.push(new Wave(game, this.x, this.y, speed,-speed,315));
+            waves.push(new Wave(game, this.x, this.y, -speed,speed,135));
             break;
         case BombType.DANGEROUS_BOMB_EIGHT_WAVE:
             totalWaves = 8
-            waves.push(new Wave(game, this.x, this.y, 0,speed));
-            waves.push(new Wave(game, this.x, this.y, 0,-speed));
-            waves.push(new Wave(game, this.x, this.y, speed,0));
-            waves.push(new Wave(game, this.x, this.y, -speed,0));
-            waves.push(new Wave(game, this.x, this.y, speed,speed));
-            waves.push(new Wave(game, this.x, this.y, -speed,-speed));
-            waves.push(new Wave(game, this.x, this.y, speed,-speed));
-            waves.push(new Wave(game, this.x, this.y, -speed,speed));
+            waves.push(new Wave(game, this.x, this.y, 0,speed,90));
+            waves.push(new Wave(game, this.x, this.y, 0,-speed,270));
+            waves.push(new Wave(game, this.x, this.y, speed,0,0));
+            waves.push(new Wave(game, this.x, this.y, -speed,0,180));
+            waves.push(new Wave(game, this.x, this.y, speed,speed,45));
+            waves.push(new Wave(game, this.x, this.y, -speed,-speed,225));
+            waves.push(new Wave(game, this.x, this.y, speed,-speed,315));
+            waves.push(new Wave(game, this.x, this.y, -speed,speed,135));
             break;
         case BombType.SAFE_BOMB:
             totalWaves = 0

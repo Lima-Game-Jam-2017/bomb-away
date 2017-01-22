@@ -14,9 +14,10 @@ Splash.prototype = {
 	loadImages: function() {
 		game.load.image('straight_img', 'assets/straight.png');
 		game.load.image('diagonal_img', 'assets/diagonal.png');
-		game.load.image('eight_img', 'assets/morado.png');
+		game.load.image('eight_img', 'assets/eight.png');
 		game.load.image('safe_img', 'assets/safe.png');
-		game.load.image('wave_img', 'assets/black.png');
+		game.load.image('wave_img', 'assets/wave.png');
+
 	},
 
 	loadFonts: function(){
@@ -45,6 +46,6 @@ Splash.prototype = {
 
 		setTimeout(function() {
 			game.state.start("MainMenu");
-		}, 1000);
+		}, 500);
 	}
 };

@@ -1,9 +1,10 @@
-console.log("wave i'm here");
-Wave = function(game, x, y,vx,vy) {
+
+Wave = function(game, x, y,vx,vy,angle) {
     Phaser.Sprite.call(this, game, x, y, 'wave_img');
 
     this.vx = vx;
     this.vy = vy;
+    this.angle = angle;
     this.anchor.setTo(0.5, 0.5);
     game.add.existing(this);
 };
