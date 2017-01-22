@@ -3,6 +3,7 @@ var Game = function(game) {
 	this.level;
 	this.bombs;
 	this.won;
+	this.detonated;
 	this.touchAvailable;
 };
 
@@ -11,9 +12,8 @@ Game.prototype = {
 	create: function() {
 		this.stage.disableVisibilityChange = false;
 
-		const total = 10;
-
 		this.level = 1;
+		this.detonated = 0;	
 		this.touchAvailable = true;
 		this.bombs = game.add.group();
 		this.bombs.enableBody = true;
