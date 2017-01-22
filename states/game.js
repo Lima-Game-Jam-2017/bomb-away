@@ -14,21 +14,28 @@ var Game = function(game, parent) {
 	this.scoreText;
 	this.goal;
 	this.score;
+	this.scoreInLevel;
 };
 
 Game.prototype = {
 
 	create: function() {
-		this.goalText = game.add.bitmapText(20, 10, 'carrier_command','Goal: ',15);
+
+		this.levelText = game.add.bitmapText(20, 10, 'carrier_command','Level: ',15);
+    	this.levelText.inputEnabled = true;
+
+		this.goalText = game.add.bitmapText(280, 10, 'carrier_command','Goal: ',15);
     	this.goalText.inputEnabled = true;
 
-    	this.scoreText = game.add.bitmapText(game.world.width /2, 10, 'carrier_command','Score: ',15);
+    	this.scoreText = game.add.bitmapText(580, 10, 'carrier_command','Score: ',15);
     	this.scoreText.inputEnabled = true;
 
 		this.stage.disableVisibilityChange = false;
 
 		this.level = 0;
 		this.detonated = 0;	
+		this.safesDetonated = 0;
+		this.scoreInLevel = 0;
 		this.liveWaves = 0;
 		this.goal = "";
 		this.score = 0;
@@ -51,15 +58,14 @@ Game.prototype = {
 		if (this.detonationStarted && this.liveWaves == 0)  {
 			var goal = levels[this.level].goal;
 			if (this.detonated >= goal && this.safesDetonated == 0) {
-				alert('You win!, next level ;)');
 				this.nextLevel();
 			} else {
-				alert('Game Over');
-				this.restart();
+				this.reloadLevel();
 			}
 		}
 		this.updateGoalText(this.detonated,levels[this.level].goal);
 		this.updateScoreText(this.score);
+		this.updateLevelText();
 	},
 
 	setupBombs: function(config) {
@@ -103,9 +109,7 @@ Game.prototype = {
 		this.bombs.remove(bomb);
 		this.addWaves(waves);
 		this.detonationStarted = true;
-		
-		(bomb.type == BombType.SAFE_BOMB) ? ++this.safesDetonated : (++this.detonated, this.score+=100);
-
+		(bomb.type == BombType.SAFE_BOMB) ? ++this.safesDetonated : (++this.detonated, this.scoreInLevel += 100, this.score += 100);
 	},
 
 	onBombPressed: function(bomb, pointer) {
@@ -122,13 +126,12 @@ Game.prototype = {
 
 	nextLevel: function() {
 		this.restart();
-		if (levels.length < this.level + 1) {
+		if (levels.length <= this.level + 1) {
 			won = true;
-			return;
+			this.gameOver();
+		} else {
+			this.setupBombs(levels[++this.level]);
 		}
-		updateText(0,levels[this.level].goal)
-		this.setupBombs(levels[++this.level]);
-
 	},
 
 	restart: function() {
@@ -136,12 +139,22 @@ Game.prototype = {
 		this.touchAvailable = true;
 		this.detonated = 0;
 		this.liveWaves = 0;
+		this.scoreInLevel = 0;
 		this.detonationStarted = false;
+		this.safesDetonated = 0;
+	},
 
+	reloadLevel: function() {
+		this.score -= this.scoreInLevel;
+		this.restart();
+		this.setupBombs(levels[this.level]);
 	},
 
 	gameOver: function() {
-
+		if (this.won) {
+			alert('Congrats, you have completed all levels!');
+		}
+		game.state.start('Credits');
 	},
 
 	updateGoalText: function(current,goal) {
@@ -150,5 +163,9 @@ Game.prototype = {
 
 	updateScoreText: function(total){
 		this.scoreText.text = "SCORE: " + total;
+	},
+
+	updateLevelText: function(){
+		this.levelText.text = "LEVEL: " + (this.level+1);
 	}
 };

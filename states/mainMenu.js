@@ -7,23 +7,30 @@ var MainMenu = function(game, parent) {
 MainMenu.prototype = {
 
     create: function() {
-        this.playText = game.add.bitmapText(100, game.world.height /2 + 100, 'carrier_command','PLAY ',15);
-        this.playText.inputEnabled = true;
+        //game.add.image(game.world.centerX, game.world.centerY, "main_menu_img").anchor.set(0.5);
+        this.background = this.game.add.tileSprite(0,0,800,600,'main_menu_img');
 
-        this.creditText = game.add.bitmapText(100, game.world.height /2 + 200, 'carrier_command','CREDITS ',15);
+        this.playText = game.add.bitmapText(450, game.world.height /2 + 000, 'carrier_command','PLAY ',30);
+        this.playText.inputEnabled = true;
+        this.playText.tint = 0x000000;
+
+        this.creditText = game.add.bitmapText(450, game.world.height /2 + 100, 'carrier_command','CREDITS ',30);
         this.creditText.inputEnabled = true;
+        this.creditText.tint = 0x000000;
+
         this.playText.events.onInputDown.add(this.playGame, this);
+        this.creditText.events.onInputDown.add(this.playCredits, this);
     },
 
     update: function() {
 
     },
-    playGame: function(){
-        setTimeout(function() {
-            game.state.start("Game");
-        }, 200);
+
+    playGame: function() {
+        game.state.start("Game");
+    },
+
+    playCredits: function() {
+        game.state.start("Credits");
     }
-
-
-
 };

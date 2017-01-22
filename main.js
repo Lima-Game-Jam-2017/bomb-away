@@ -1,27 +1,4 @@
-var game = new Phaser.Game("100%", "100%", Phaser.AUTO, 'game', { init: init, preload: preload, create: create, update: update, resize: resize });
-
-function init() {
-    console.log("init");
-    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    game.scale.pageAlignVertically = true;
-    game.scale.setScreenSize(true);
-}
-
-function preload() {
-
-}
-
-function create() {
-
-}
-
-function update() {
-
-}
-
-function resize() {
-
-}
+var game = new Phaser.Game(800, 600, Phaser.AUTO, 'content',null);
 
 Main = function() {}
 
