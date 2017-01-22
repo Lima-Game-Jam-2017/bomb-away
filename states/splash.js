@@ -36,15 +36,13 @@ Splash.prototype = {
 	addGameStates: function() {
 		game.state.add("MainMenu", MainMenu);
 		game.state.add("Game", Game);
-		//game.state.add("GameOver", GameOver);
 		//game.state.add("Credits", Credits);
 	},
 
 	create: function() {
 		this.addGameStates();
-
 		setTimeout(function() {
-			game.state.start("MainMenu");
+			game.state.start('Game');
 		}, 1000);
 	}
 };

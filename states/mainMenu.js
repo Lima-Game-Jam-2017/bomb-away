@@ -17,7 +17,4 @@ MainMenu.prototype = {
     update: function() {
 
     },
-
-
-
 };

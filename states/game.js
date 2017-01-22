@@ -29,6 +29,7 @@ Game.prototype = {
 
 		this.level = 0;
 		this.detonated = 0;	
+		this.safesDetonated = 0;
 		this.liveWaves = 0;
 		this.goal = "";
 		this.score = 0;
@@ -50,12 +51,13 @@ Game.prototype = {
 		game.physics.arcade.overlap(this.waves, this.bombs, this.onWaveHitBomb, null, this);
 		if (this.detonationStarted && this.liveWaves == 0)  {
 			var goal = levels[this.level].goal;
+			console.log(this.detonated);
+			console.log(this.safesDetonated);
 			if (this.detonated >= goal && this.safesDetonated == 0) {
-				alert('You win!, next level ;)');
 				this.nextLevel();
 			} else {
-				alert('Game Over');
 				this.restart();
+				this.gameOver();
 			}
 		}
 		this.updateGoalText(this.detonated,levels[this.level].goal);
@@ -103,9 +105,7 @@ Game.prototype = {
 		this.bombs.remove(bomb);
 		this.addWaves(waves);
 		this.detonationStarted = true;
-		
-		(bomb.type == BombType.SAFE_BOMB) ? ++this.safesDetonated : (++this.detonated, this.score+=100);
-
+		(bomb.type == BombType.SAFE_BOMB) ? ++this.safesDetonated : (++this.detonated, this.score += 100);
 	},
 
 	onBombPressed: function(bomb, pointer) {
@@ -122,13 +122,12 @@ Game.prototype = {
 
 	nextLevel: function() {
 		this.restart();
-		if (levels.length < this.level + 1) {
+		if (levels.length <= this.level + 1) {
 			won = true;
-			return;
+			this.gameOver();
+		} else {
+			this.setupBombs(levels[++this.level]);
 		}
-		updateText(0,levels[this.level].goal)
-		this.setupBombs(levels[++this.level]);
-
 	},
 
 	restart: function() {
@@ -137,11 +136,14 @@ Game.prototype = {
 		this.detonated = 0;
 		this.liveWaves = 0;
 		this.detonationStarted = false;
-
+		this.safesDetonated = 0;
 	},
 
 	gameOver: function() {
-
+		if (this.won) {
+			alert('Congrats, you have completed all levels!');
+		}
+		game.state.start('Credits');
 	},
 
 	updateGoalText: function(current,goal) {
